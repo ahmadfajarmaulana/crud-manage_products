@@ -1,61 +1,527 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# API Product Management
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+API terdiri dari auth, category, dan product.
+`CRUD` Products dan Categories menggunakan token.
 
-## About Laravel
+## Autentikasi
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+API ini menggunakan autentikasi Laravel Passport. Sebelum Anda dapat mengakses beberapa endpoint, perlu mendapatkan token akses terlebih dahulu. Berikut adalah langkah-langkah untuk mendapatkan token akses:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Endpoint AUTH
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1. Register
 
-## Learning Laravel
+-   **URL**: `/api/register`
+-   **Metode**: POST
+-   **Deskripsi**: Mendaftarkan pengguna baru dengan data yang diberikan.
+-   **Parameter Body**:
+    -   `name` (required).
+    -   `email` (required,unique).
+    -   `password` (required).
+-   **Contoh Permintaan**:
+    POST /api/login
+    Content-Type: application/json
+    ```json
+    {
+        "name": "your_name",
+        "email": "user@example.com",
+        "password": "your_password"
+    }
+    ```
+-   **Response**:
+    **_`Success (201 Created)`_**
+    ```json
+    {
+        "status": true,
+        "message": "User logged in successfully",
+        "data": {
+            "user": "Admin",
+            "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjo"
+        }
+    }
+    ```
+    **_`Error Validation (400 Bad Request)`_**
+    ```json
+    {
+        "status": false,
+        "message": {
+            "errors": [
+                {
+                    "name": ["The name field is required."],
+                    "email": ["The email field is required."],
+                    "password": ["The password field is required."]
+                }
+            ]
+        }
+    }
+    ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 2. Login
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+-   **URL**: `/api/login`
+-   **Metode**: POST
+-   **Deskripsi**: Endpoint untuk melakukan proses login dan mendapatkan token akses.
+-   **Parameter Body**:
+    -   `email` (required).
+    -   `password` (required).
+-   **Contoh Permintaan**:
+    POST /api/login
+    Content-Type: application/json
+    ```json
+    {
+        "email": "user@example.com",
+        "password": "your_password"
+    }
+    ```
+-   **Response**:
+    **_`Success (200 OK)`_**
+    ```json
+    {
+        "status": true,
+        "message": "User logged in successfully",
+        "data": {
+            "user": "Admin",
+            "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjo"
+        }
+    }
+    ```
+    **_`Error (401 Anauthorized)`_**
+    ```json
+    {
+        "status": false,
+        "message": "Invalid credentials"
+    }
+    ```
 
-## Laravel Sponsors
+## Endpoint Categories
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### 1. Menampilkan Semua Daftar Categori
 
-### Premium Partners
+-   **URL**: `/categories`
+-   **Metode**: GET
+-   **Deskripsi**: Mendapatkan daftar semua categori yang tersedia.
+-   **Header**:
+    -   `Authorization`: access_token
+-   **Permintaan** :
+    -   Tidak ada parameter khusus yang diperlukan.
+-   **_Response_**
+    **_`Sukses (200 OK)`_**
+    ```json
+    {
+        "status": "true",
+        "message": "OK",
+        "data": [
+            {
+                "id": 1,
+                "name": "Category 1",
+                "created_at": "2023-07-25T23:37:40.000000Z",
+                "updated_at": "2023-07-25T23:37:40.000000Z"
+            },
+            {
+                "id": 2,
+                "name": "Category 2",
+                "created_at": "2023-07-25T23:37:40.000000Z",
+                "updated_at": "2023-07-25T23:37:40.000000Z"
+            }
+        ]
+    }
+    ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+### 2. Membuat Atau Menambah Categori (Create)
 
-## Contributing
+-   **URL**: `/api/categories`
+-   **Metode**: POST
+-   **Deskripsi**: Endpoint untuk Membuat Categori baru dengan data yang diberikan.
+-   **Parameter Body**:
+    -   `name` (required, unique).
+-   **Header**:
+    -   `Authorization`: access_token
+-   **Contoh Permintaan**:
+    POST /api/categories
+    Content-Type: application/json
+    ```json
+    {
+        "name": "New Category 3"
+    }
+    ```
+-   **Response**:
+    **_`Success (201 Created)`_**
+    ```json
+    {
+        "status": true,
+        "message": "Data successfully created",
+        "data": {
+            "name": "New Category 3",
+            "updated_at": "2023-07-27T13:57:50.000000Z",
+            "created_at": "2023-07-27T13:57:50.000000Z",
+            "id": 3
+        }
+    }
+    ```
+    **_`Error Validation (400 Bad Request)`_**
+    ```json
+    {
+        "status": false,
+        "message": {
+            "errors": [
+                {
+                    "name": ["The name field is required."]
+                }
+            ]
+        }
+    }
+    ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 3. Mendapatkan Categori Berdasarkan ID
 
-## Code of Conduct
+-   **URL**: `/api/categories/{id}`
+-   **Metode**: GET
+-   **Deskripsi**: Endpoint untuk Mendpatkan Categori berdasarkan ID Categori.
+-   **Parameter URL**:
+    -   `id` (required : id categori yang ingin di tampilkan).
+-   **Header**:
+    -   `Authorization`: access_token
+-   **Response**:
+    **_`Success (200 OK)`_**
+    ```json
+    {
+        "status": true,
+        "message": "OK",
+        "data": {
+            "id": 2,
+            "name": "Category 2",
+            "created_at": "2023-07-26T15:45:50.000000Z",
+            "updated_at": "2023-07-26T15:45:50.000000Z",
+            "products": [
+                {
+                    "id": 4,
+                    "category_id": 2,
+                    "name": "product D",
+                    "description": "desc product D",
+                    "price": "12131",
+                    "stock": 200,
+                    "created_at": "2023-07-26T16:01:06.000000Z",
+                    "updated_at": "2023-07-26T16:01:06.000000Z"
+                },
+                {
+                    "id": 5,
+                    "category_id": 2,
+                    "name": "product E",
+                    "description": "desc product E",
+                    "price": "12131",
+                    "stock": 200,
+                    "created_at": "2023-07-27T13:55:47.000000Z",
+                    "updated_at": "2023-07-27T13:55:47.000000Z"
+                },
+                {
+                    "id": 6,
+                    "category_id": 2,
+                    "name": "product F",
+                    "description": "desc product F",
+                    "price": "12131",
+                    "stock": 200,
+                    "created_at": "2023-07-27T13:57:50.000000Z",
+                    "updated_at": "2023-07-27T13:57:50.000000Z"
+                }
+            ]
+        }
+    }
+    ```
+    **_`Data Not Found (404 Not Found)`_**
+    ```json
+    {
+        "status": false,
+        "message": "Data not found"
+    }
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 3. Merubah Data Category (Update)
 
-## Security Vulnerabilities
+-   **URL**: `/api/categories/{id}`
+-   **Metode**: PUT
+-   **Deskripsi**: Endpoint untuk update categori dengan data yang diberikan berdasarkan id.
+-   **Parameter URL**:
+    -   `id` (required : id categori yang ingin di edit).
+-   **Parameter Body**:
+    -   `name` (required, unique).
+-   **Header**:
+    -   `Authorization`: access_token
+-   **Contoh Permintaan**:
+    PUT /api/categories{id}
+    Content-Type: application/json
+    ```json
+    {
+        "name": "Update Category C"
+    }
+    ```
+-   **Response**:
+    **_`Success (200 OK)`_**
+    ```json
+    {
+        "status": true,
+        "message": "Data successfully updated",
+        "data": {
+            "id": 1
+            "name": "Update Category C",
+            "updated_at": "2023-07-27T13:57:50.000000Z",
+            "created_at": "2023-07-27T13:58:50.000000Z",
+        }
+    }
+    ```
+    **_`Error Validation (400 Bad Request)`_**
+    ```json
+    {
+        "status": false,
+        "message": {
+            "errors": [
+                {
+                    "name": ["The name has already been taken."]
+                }
+            ]
+        }
+    }
+    ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 3. Hapus Categori Berdasarkan ID (Delete)
 
-## License
+-   **URL**: `/api/categories/{id}`
+-   **Metode**: DELETE
+-   **Deskripsi**: Endpoint untuk menghapus categori berdasarkan ID Categori.
+-   **Parameter URL**:
+    -   `id` (required : id categori yang ingin di hapus).
+-   **Header**:
+    -   `Authorization`: access_token
+-   **Response**:
+    **_`Success (200 OK)`_**
+    ```json
+    {
+        "status": true,
+        "message": "Data successfully deleted"
+    }
+    ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Endpoint Products
+
+### 1. Mendapatkan Daftar Produk
+
+-   **URL**: `/products`
+-   **Metode**: GET
+-   **Deskripsi**: Mendapatkan daftar semua produk yang tersedia.
+-   **Header**:
+    -   `Authorization`: access_token
+-   **Permintaan** :
+    -   Tidak ada parameter khusus yang diperlukan.
+-   **_Response_**
+    **_`Sukses (200 OK)`_**
+    ```json
+    {
+        "status": "true",
+        "message": "OK",
+        "data": [
+            {
+                "id": 1,
+                "category_id": 1,
+                "name": "Product A",
+                "description": "Description of Product A",
+                "price": 100,
+                "stock": 200
+                "created_at": "2023-07-25T23:37:40.000000Z",
+                "updated_at": "2023-07-25T23:37:40.000000Z",
+                "category": {
+                    "id": 1,
+                    "name": "Category 1"
+                }
+            },
+            {
+                "id": 2,
+                "category_id": 2,
+                "name": "Product B",
+                "description": "Description of Product B",
+                "price": 100,"stock": 200
+                "created_at": "2023-07-25T23:37:40.000000Z",
+                "updated_at": "2023-07-25T23:37:40.000000Z",
+                "category": {
+                    "id": 2,
+                    "name": "Category B"
+                }
+            }
+        ]
+    }
+    ```
+
+### 2. Membuat Atau Menambah Produk (Create)
+
+-   **URL**: `/api/products`
+-   **Metode**: POST
+-   **Deskripsi**: Endpoint untuk Membuat produk baru dengan data yang diberikan.
+-   **Parameter Body**:
+    -   `name` (required).
+    -   `category_id` (required).
+    -   `description`.
+    -   `price` (required).
+    -   `stock`.
+-   **Header**:
+    -   `Authorization`: access_token
+-   **Contoh Permintaan**:
+    POST /api/login
+    Content-Type: application/json
+    ```json
+    {
+        "name": "New Product",
+        "category_id": 2,
+        "description": "Description of New Product",
+        "price": "12131",
+        "stock": "200"
+    }
+    ```
+-   **Response**:
+    **_`Success (201 Created)`_**
+    ```json
+    {
+        "status": true,
+        "message": "Data successfully created",
+        "data": {
+            "name": "New Product C",
+            "category_id": 2,
+            "description": "Description of New Product",
+            "price": "12131",
+            "stock": "200",
+            "updated_at": "2023-07-27T13:57:50.000000Z",
+            "created_at": "2023-07-27T13:57:50.000000Z",
+            "id": 12
+        }
+    }
+    ```
+    **_`Error Validation (400 Bad Request)`_**
+    ```json
+    {
+        "status": false,
+        "message": {
+            "errors": [
+                {
+                    "name": ["The name field is required."],
+                    "category_id": ["The category id field is required."],
+                    "price": ["The price field is required."]
+                }
+            ]
+        }
+    }
+    ```
+
+### 3. Mendapatkan Produk Berdasarkan ID
+
+-   **URL**: `/api/products/{id}`
+-   **Metode**: GET
+-   **Deskripsi**: Endpoint untuk Mendpatkan produk berdasarkan ID Product.
+-   **Parameter URL**:
+    -   `id` (required : id product yang ingin di tampilkan).
+-   **Header**:
+    -   `Authorization`: access_token
+-   **Response**:
+    **_`Success (200 OK)`_**
+    ```json
+    {
+        "status": true,
+        "message": "OK",
+        "data": {
+            "id": 3,
+            "name": "product C",
+            "category_id": 2,
+            "description": "Description of Product",
+            "price": "12131",
+            "stock": "200",
+            "updated_at": "2023-07-27T13:57:50.000000Z",
+            "created_at": "2023-07-27T13:57:50.000000Z",
+            "category": {
+                "id": 2,
+                "name": "Category 2"
+            }
+        }
+    }
+    ```
+    **_`Data Not Found (404 Not Found)`_**
+    ```json
+    {
+        "status": false,
+        "message": "Data not found"
+    }
+    ```
+
+### 3. Merubah Data Product (Update)
+
+-   **URL**: `/api/products/{id}`
+-   **Metode**: PUT
+-   **Deskripsi**: Endpoint untuk edit produk berdasarkan id dengan data yang diberikan.
+-   **Parameter URL**:
+    -   `id` (required : id product yang ingin di edit).
+-   **Parameter Body**:
+    -   `name` (required, unique).
+    -   `category_id` (required).
+    -   `description`.
+    -   `price` (required).
+    -   `stock`.
+-   **Header**:
+    -   `Authorization`: access_token
+-   **Contoh Permintaan**:
+    PUT /api/Products{id}
+    Content-Type: application/json
+    ```json
+    {
+        "name": "Update Product A",
+        "category_id": 2,
+        "description": "Description of Product",
+        "price": "20000",
+        "stock": "200"
+    }
+    ```
+-   **Response**:
+    **_`Success (200 OK)`_**
+    ```json
+    {
+        "status": true,
+        "message": "Data successfully updated",
+        "data": {
+            "id": 1
+            "name": "Update Product A",
+            "category_id": 2,
+            "description": "Description of Product",
+            "price": "20000",
+            "stock": "200",
+            "updated_at": "2023-07-27T13:57:50.000000Z",
+            "created_at": "2023-07-27T13:58:50.000000Z",
+        }
+    }
+    ```
+    **_`Error Validation (400 Bad Request)`_**
+    ```json
+    {
+        "status": false,
+        "message": {
+            "errors": [
+                {
+                    "name": ["The name has already been taken."],
+                    "category_id": ["The category id field is required."],
+                    "price": ["The price field is required."]
+                }
+            ]
+        }
+    }
+    ```
+
+### 3. Hapus Produk Berdasarkan ID (Delete)
+
+-   **URL**: `/api/products/{id}`
+-   **Metode**: DELETE
+-   **Deskripsi**: Endpoint untuk menghapus produk berdasarkan ID Product.
+-   **Parameter URL**:
+    -   `id` (required : id product yang ingin di hapus).
+-   **Header**:
+    -   `Authorization`: access_token
+-   **Response**:
+    **_`Success (200 OK)`_**
+    ```json
+    {
+        "status": true,
+        "message": "Data successfully deleted"
+    }
+    ```

@@ -18,8 +18,8 @@ API ini menggunakan autentikasi Laravel Passport. Sebelum Anda dapat mengakses b
     -   `name` (required).
     -   `email` (required,unique).
     -   `password` (required).
--   **Contoh Permintaan**:
-    POST /api/login
+-   **Contoh Permintaan**:  
+    POST /api/login  
     Content-Type: application/json
     ```json
     {
@@ -64,7 +64,7 @@ API ini menggunakan autentikasi Laravel Passport. Sebelum Anda dapat mengakses b
 -   **Parameter Body**:
     -   `email` (required).
     -   `password` (required).
--   **Contoh Permintaan**:
+-   **Contoh Permintaan**:  
     POST /api/login
     Content-Type: application/json
     ```json
@@ -136,8 +136,8 @@ API ini menggunakan autentikasi Laravel Passport. Sebelum Anda dapat mengakses b
     -   `name` (required, unique).
 -   **Header**:
     -   `Authorization`: access_token
--   **Contoh Permintaan**:
-    POST /api/categories
+-   **Contoh Permintaan**:  
+    POST /api/categories  
     Content-Type: application/json
     ```json
     {
@@ -246,8 +246,8 @@ API ini menggunakan autentikasi Laravel Passport. Sebelum Anda dapat mengakses b
     -   `name` (required, unique).
 -   **Header**:
     -   `Authorization`: access_token
--   **Contoh Permintaan**:
-    PUT /api/categories{id}
+-   **Contoh Permintaan**:  
+    PUT /api/categories{id}  
     Content-Type: application/json
     ```json
     {
@@ -362,8 +362,8 @@ API ini menggunakan autentikasi Laravel Passport. Sebelum Anda dapat mengakses b
     -   `stock`.
 -   **Header**:
     -   `Authorization`: access_token
--   **Contoh Permintaan**:
-    POST /api/login
+-   **Contoh Permintaan**:  
+    POST /api/products  
     Content-Type: application/json
     ```json
     {

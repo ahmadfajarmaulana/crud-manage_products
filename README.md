@@ -1,6 +1,6 @@
 # API Product Management
 
-API terdiri dari auth, category, dan product.
+API terdiri dari auth, category, dan product.  
 `CRUD` Products dan Categories menggunakan token.
 
 ## Autentikasi

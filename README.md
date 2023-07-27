@@ -28,7 +28,7 @@ API ini menggunakan autentikasi Laravel Passport. Sebelum Anda dapat mengakses b
         "password": "your_password"
     }
     ```
--   **Response**:
+-   **Response**:  
     **_`Success (201 Created)`_**
     ```json
     {
@@ -65,7 +65,7 @@ API ini menggunakan autentikasi Laravel Passport. Sebelum Anda dapat mengakses b
     -   `email` (required).
     -   `password` (required).
 -   **Contoh Permintaan**:  
-    POST /api/login
+    POST /api/login  
     Content-Type: application/json
     ```json
     {
@@ -73,7 +73,7 @@ API ini menggunakan autentikasi Laravel Passport. Sebelum Anda dapat mengakses b
         "password": "your_password"
     }
     ```
--   **Response**:
+-   **Response**:  
     **_`Success (200 OK)`_**
     ```json
     {
@@ -104,7 +104,7 @@ API ini menggunakan autentikasi Laravel Passport. Sebelum Anda dapat mengakses b
     -   `Authorization`: access_token
 -   **Permintaan** :
     -   Tidak ada parameter khusus yang diperlukan.
--   **_Response_**
+-   **_Response_**  
     **_`Sukses (200 OK)`_**
     ```json
     {
@@ -144,7 +144,7 @@ API ini menggunakan autentikasi Laravel Passport. Sebelum Anda dapat mengakses b
         "name": "New Category 3"
     }
     ```
--   **Response**:
+-   **Response**:  
     **_`Success (201 Created)`_**
     ```json
     {
@@ -181,7 +181,7 @@ API ini menggunakan autentikasi Laravel Passport. Sebelum Anda dapat mengakses b
     -   `id` (required : id categori yang ingin di tampilkan).
 -   **Header**:
     -   `Authorization`: access_token
--   **Response**:
+-   **Response**:  
     **_`Success (200 OK)`_**
     ```json
     {
@@ -254,7 +254,7 @@ API ini menggunakan autentikasi Laravel Passport. Sebelum Anda dapat mengakses b
         "name": "Update Category C"
     }
     ```
--   **Response**:
+-   **Response**:  
     **_`Success (200 OK)`_**
     ```json
     {
@@ -291,7 +291,7 @@ API ini menggunakan autentikasi Laravel Passport. Sebelum Anda dapat mengakses b
     -   `id` (required : id categori yang ingin di hapus).
 -   **Header**:
     -   `Authorization`: access_token
--   **Response**:
+-   **Response**:  
     **_`Success (200 OK)`_**
     ```json
     {
@@ -311,7 +311,7 @@ API ini menggunakan autentikasi Laravel Passport. Sebelum Anda dapat mengakses b
     -   `Authorization`: access_token
 -   **Permintaan** :
     -   Tidak ada parameter khusus yang diperlukan.
--   **_Response_**
+-   **_Response_**  
     **_`Sukses (200 OK)`_**
     ```json
     {
@@ -374,7 +374,7 @@ API ini menggunakan autentikasi Laravel Passport. Sebelum Anda dapat mengakses b
         "stock": "200"
     }
     ```
--   **Response**:
+-   **Response**:  
     **_`Success (201 Created)`_**
     ```json
     {
@@ -417,7 +417,7 @@ API ini menggunakan autentikasi Laravel Passport. Sebelum Anda dapat mengakses b
     -   `id` (required : id product yang ingin di tampilkan).
 -   **Header**:
     -   `Authorization`: access_token
--   **Response**:
+-   **Response**:  
     **_`Success (200 OK)`_**
     ```json
     {
@@ -474,7 +474,7 @@ API ini menggunakan autentikasi Laravel Passport. Sebelum Anda dapat mengakses b
         "stock": "200"
     }
     ```
--   **Response**:
+-   **Response**:  
     **_`Success (200 OK)`_**
     ```json
     {
@@ -517,7 +517,7 @@ API ini menggunakan autentikasi Laravel Passport. Sebelum Anda dapat mengakses b
     -   `id` (required : id product yang ingin di hapus).
 -   **Header**:
     -   `Authorization`: access_token
--   **Response**:
+-   **Response**:  
     **_`Success (200 OK)`_**
     ```json
     {
